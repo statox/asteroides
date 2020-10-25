@@ -1,0 +1,24 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: #000000;
+
+    overflow: hidden; /* Hide scrollbars */
+    margin: 10;
+    display: flex;
+
+    /* This centers our sketch horizontally. */
+    justify-content: center;
+
+    /* This centers our sketch vertically. */
+    align-items: center;
+}
+div#appDiv button.active {
+    background: #38b57e;
+}
+
+div#appDiv button.inactive {
+    background: #d37676;
+}
