@@ -19,16 +19,4 @@ function Mover() {
             this.pos.mag(R);
         }
     };
-
-    this.thrust = () => {
-        this.acc = this.dir.copy();
-        this.acc.setMag(0.5);
-    };
-
-    this.turnLeft = () => {
-        this.dir.rotate(-radians(10));
-    };
-    this.turnRight = () => {
-        this.dir.rotate(radians(10));
-    };
 }

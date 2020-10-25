@@ -7,6 +7,7 @@ function Ship() {
     this.shots = [];
     this.coolDown = 300;
     this.lastShot = millis();
+    this.rotationSpeed = radians(6);
 
     this.draw = () => {
         push();
@@ -39,5 +40,17 @@ function Ship() {
             this.shots.push(new Shot(this.pos, shotSpeed));
             this.lastShot = millis();
         }
+    };
+
+    this.thrust = () => {
+        this.acc = this.dir.copy();
+        this.acc.setMag(0.5);
+    };
+
+    this.turnLeft = () => {
+        this.dir.rotate(-this.rotationSpeed);
+    };
+    this.turnRight = () => {
+        this.dir.rotate(this.rotationSpeed);
     };
 }
