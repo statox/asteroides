@@ -31,17 +31,17 @@ function resetGame() {
 function preload() {
     soundFormats('mp3', 'm4a');
     shotSounds = [];
-    shotSounds.push(loadSound('../assets/shot_1.mp3'));
-    shotSounds.push(loadSound('../assets/shot_2.mp3'));
-    shotSounds.push(loadSound('../assets/Shot_3.m4a'));
-    shotSounds.push(loadSound('../assets/Shot_4.m4a'));
+    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/shot_1.mp3'));
+    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/shot_2.mp3'));
+    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Shot_3.m4a'));
+    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Shot_4.m4a'));
 
     explosionShounds = [];
-    explosionShounds.push(loadSound('../assets/Boum_1.m4a'));
-    explosionShounds.push(loadSound('../assets/Boum_2.m4a'));
-    explosionShounds.push(loadSound('../assets/Boum_3.m4a'));
+    explosionShounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Boum_1.m4a'));
+    explosionShounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Boum_2.m4a'));
+    explosionShounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Boum_3.m4a'));
 
-    gameOverSound = loadSound('../assets/Game_over.m4a');
+    gameOverSound = loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Game_over.m4a');
 }
 
 function setup() {
