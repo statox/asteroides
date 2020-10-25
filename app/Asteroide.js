@@ -9,6 +9,10 @@ function Asteroide(r, pos, speed) {
         this.pos.setMag(R * 0.8);
     }
     this.speed = speed || p5.Vector.random2D();
+    this.randomValue = random();
+    this.maxSpeed = map(this.randomValue, 0, 1, 0.5, 2);
+    this.speed.setMag(this.maxSpeed);
+    this.rotateAngle = map(this.randomValue, 0, 1, -radians(1), radians(1));
 
     this.nbVertexes = 20;
     this.vertexes = [new p5.Vector(0, this.r)];
@@ -33,6 +37,9 @@ function Asteroide(r, pos, speed) {
         this.vertexes.forEach((v) => vertex(v.x, v.y));
         endShape(CLOSE);
         pop();
+
+        // Should be in an inherited move() function
+        this.dir.rotate(this.rotateAngle);
     };
 
     this.explode = () => {
