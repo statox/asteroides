@@ -1,5 +1,5 @@
-function PlusOne(pos) {
-    this.text = '+1';
+function PlusOne(pos, message) {
+    this.message = message || '+1';
     this.ttl = 100;
     this.pos = pos;
 
@@ -12,7 +12,7 @@ function PlusOne(pos) {
         push();
         translate(this.pos.x, this.pos.y);
         fill(250);
-        text(this.text, -textWidth(this.text) / 2, 0);
+        text(this.message, -textWidth(this.text) / 2, 0);
         pop();
     };
 }

@@ -2,6 +2,7 @@ let appSettings = {};
 let ship;
 let asteroides;
 let plusOnes = [];
+let bonuses = [];
 let R;
 let score;
 let best;
@@ -128,6 +129,10 @@ function draw() {
                 a.hit = true;
                 s.hit = true;
                 score++;
+
+                if (random() < 0.2) {
+                    plusOnes.push(new Bonus(a.pos));
+                }
             }
         });
     });

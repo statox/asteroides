@@ -51,10 +51,9 @@ function Asteroide(pos, r, speed) {
         if (this.r < this.minR) {
             return [];
         }
-        const newA = [];
         return [
-            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(PI / 8)),
-            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(-PI / 8))
+            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(-PI / 8)),
+            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(PI / 8))
         ];
     };
 }

@@ -8,6 +8,7 @@ function Ship() {
     this.coolDown = 300;
     this.lastShot = millis();
     this.rotationSpeed = radians(6);
+    this.bonuses = {tripleGun: false};
 
     this.draw = () => {
         push();
@@ -18,6 +19,11 @@ function Ship() {
         this.vertexes.forEach((v) => vertex(v.x, v.y));
         endShape(CLOSE);
         pop();
+
+        // Should be in an inherited move function
+        if (this.bonuses.autoshoot) {
+            this.shoot();
+        }
     };
 
     this.updateShots = () => {
@@ -35,10 +41,18 @@ function Ship() {
         if (millis() > this.lastShot + this.coolDown) {
             const index = parseInt(random() * shotSounds.length);
             shotSounds[index].play();
+
+            this.lastShot = millis();
+
             const shotSpeed = this.dir.copy();
             shotSpeed.setMag(11);
             this.shots.push(new Shot(this.pos, shotSpeed));
-            this.lastShot = millis();
+            if (this.bonuses.tripleGun) {
+                shotSpeed.rotate(PI / 6);
+                this.shots.push(new Shot(this.pos, shotSpeed));
+                shotSpeed.rotate((-2 * PI) / 6);
+                this.shots.push(new Shot(this.pos, shotSpeed));
+            }
         }
     };
 
@@ -52,5 +66,22 @@ function Ship() {
     };
     this.turnRight = () => {
         this.dir.rotate(this.rotationSpeed);
+    };
+
+    this.setTripleGun = () => {
+        this.bonuses.tripleGun = true;
+        setTimeout(() => {
+            this.bonuses.tripleGun = false;
+        }, 5000);
+    };
+
+    this.setAutoshoot = () => {
+        this.bonuses.autoshoot = true;
+        this.coolDown = 50;
+
+        setTimeout(() => {
+            this.bonuses.autoshoot = false;
+            this.coolDown = 300;
+        }, 5000);
     };
 }
