@@ -1,6 +1,7 @@
 let appSettings = {};
 let ship;
 let asteroides;
+let plusOnes = [];
 let R;
 let score;
 let best;
@@ -89,6 +90,18 @@ function draw() {
     fill(5);
     circle(0, 0, R * 2);
 
+    let i = plusOnes.length;
+    while (i > 0) {
+        i--;
+        const p = plusOnes[i];
+        if (p.ttl <= 0) {
+            plusOnes.splice(i, 1);
+        } else {
+            p.move();
+            p.draw();
+        }
+    }
+
     ship.move();
     ship.updateShots();
     ship.draw();
@@ -119,7 +132,7 @@ function draw() {
         });
     });
 
-    let i = asteroides.length - 1;
+    i = asteroides.length - 1;
     while (i >= 0) {
         const a = asteroides[i];
         if (a.hit) {

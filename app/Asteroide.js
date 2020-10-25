@@ -46,6 +46,8 @@ function Asteroide(pos, r, speed) {
         const index = parseInt(random() * explosionShounds.length);
         explosionShounds[index].play();
 
+        plusOnes.push(new PlusOne(this.pos));
+
         if (this.r < this.minR) {
             return [];
         }
