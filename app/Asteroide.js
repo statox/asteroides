@@ -1,4 +1,4 @@
-function Asteroide(r, pos, speed) {
+function Asteroide(pos, r, speed) {
     Mover.call(this);
     this.minR = 30;
     this.r = r || map(random(), 0, 1, this.minR, 50);
@@ -51,8 +51,8 @@ function Asteroide(r, pos, speed) {
         }
         const newA = [];
         return [
-            new Asteroide(this.r * 0.8, this.pos.copy(), this.speed.copy().rotate(PI / 8)),
-            new Asteroide(this.r * 0.8, this.pos.copy(), this.speed.copy().rotate(-PI / 8))
+            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(PI / 8)),
+            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(-PI / 8))
         ];
     };
 }

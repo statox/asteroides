@@ -1,8 +1,8 @@
 function Ship() {
     Mover.call(this);
-    this.speed = p5.Vector.random2D();
+    this.dir = p5.Vector.random2D();
+    this.speed = this.dir.copy();
     this.speed.setMag(3);
-    this.dir = this.speed.copy();
     this.vertexes = [new p5.Vector(-10, 10), new p5.Vector(0, -20), new p5.Vector(10, 10)];
     this.shots = [];
     this.coolDown = 300;

@@ -7,12 +7,26 @@ let best;
 let shotSounds;
 let explosionShounds;
 let gameOverSound;
+let nbAsteroides;
 const itemName = 'statox-asteroides-best';
 
 function customResizeCanvas() {
     const dim = Math.min(windowHeight, windowWidth);
     R = (dim * 0.95) / 2;
     resizeCanvas(dim, dim);
+}
+
+function generateAsteroides() {
+    asteroides = [];
+    for (let _ = 0; _ < nbAsteroides; _++) {
+        let pos = p5.Vector.random2D();
+        pos.setMag(R * random());
+        while (pos.dist(ship.pos) < 250) {
+            pos = p5.Vector.random2D();
+            pos.setMag(R * random() || 0.1);
+        }
+        asteroides.push(new Asteroide(pos));
+    }
 }
 
 function resetGame() {
@@ -22,10 +36,8 @@ function resetGame() {
     }
     score = 0;
     ship = new Ship();
-    asteroides = [];
-    for (let _ = 0; _ < 10; _++) {
-        asteroides.push(new Asteroide());
-    }
+    nbAsteroides = 0;
+    generateAsteroides();
 }
 
 function preload() {
@@ -117,6 +129,11 @@ function draw() {
         i--;
     }
     pop();
+
+    if (asteroides.length === 0) {
+        nbAsteroides++;
+        generateAsteroides();
+    }
 
     fill(200);
     textSize(20);
