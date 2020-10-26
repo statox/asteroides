@@ -111,16 +111,18 @@ function draw() {
     ship.shots.forEach((s) => s.draw());
 
     const shipVertexes = ship.vertexes.map((v) => p5.Vector.add(v, ship.pos));
-    let hitShip = false;
     asteroides.forEach((a) => {
         a.move();
         a.draw();
 
         const asteroideVertexes = a.vertexes.map((v) => p5.Vector.add(v, a.pos));
         if (collidePolyPoly(shipVertexes, asteroideVertexes, true)) {
-            hitShip = true;
-            gameOverSound.play();
-            resetGame();
+            ship.hit();
+            a.hit = true;
+            if (ship.lives === 0) {
+                gameOverSound.play();
+                resetGame();
+            }
         }
 
         ship.shots.forEach((s) => {

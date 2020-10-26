@@ -6,11 +6,29 @@ function Ship() {
     this.vertexes = [new p5.Vector(-10, 10), new p5.Vector(0, -20), new p5.Vector(10, 10)];
     this.shots = [];
     this.coolDown = 300;
+    this.ringShotCoolDown = 5000;
     this.lastShot = millis();
+    this.lastRingShot = millis();
     this.rotationSpeed = radians(6);
-    this.bonuses = {tripleGun: false};
+    this.lives = 1;
+    this.bonuses = {
+        tripleGun: false,
+        autoshoot: false
+    };
 
     this.draw = () => {
+        if (this.lives > 1) {
+            push();
+            translate(this.pos.x, this.pos.y);
+            scale(1.5);
+            rotate(this.dir.heading() + PI / 2);
+            stroke(200);
+            beginShape();
+            this.vertexes.forEach((v) => vertex(v.x, v.y));
+            endShape(CLOSE);
+            pop();
+        }
+
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.dir.heading() + PI / 2);
@@ -56,6 +74,20 @@ function Ship() {
         }
     };
 
+    this.ringShoot = () => {
+        const index = parseInt(random() * shotSounds.length);
+        shotSounds[index].play();
+        this.lastRingShot = millis();
+
+        const shotSpeed = this.dir.copy();
+        shotSpeed.setMag(11);
+        this.shots.push(new Shot(this.pos, shotSpeed));
+        for (let i = 0; i < 360; i++) {
+            shotSpeed.rotate((2 * PI) / 360);
+            this.shots.push(new Shot(this.pos, shotSpeed));
+        }
+    };
+
     this.thrust = () => {
         this.acc = this.dir.copy();
         this.acc.setMag(0.5);
@@ -83,5 +115,14 @@ function Ship() {
             this.bonuses.autoshoot = false;
             this.coolDown = 300;
         }, 5000);
+    };
+
+    this.addShield = () => {
+        this.lives++;
+    };
+
+    this.hit = () => {
+        this.lives--;
+        console.log(this.lives);
     };
 }

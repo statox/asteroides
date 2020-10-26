@@ -1,16 +1,42 @@
 function Bonus(pos) {
     const actions = [
         {
-            message: 'Triple Gun',
-            f: () => ship.setTripleGun()
-        },
-        {
-            message: 'Autoshoot',
-            f: () => ship.setAutoshoot()
+            message: '+1',
+            f: () => (score += 1)
         }
     ];
 
-    const {message, f} = actions[parseInt(random() * actions.length)];
-    f();
-    PlusOne.call(this, pos, message);
+    if (!ship.bonuses.tripleGun) {
+        actions.push({
+            message: 'Triple Gun',
+            f: () => ship.setTripleGun()
+        });
+    }
+
+    if (!ship.bonuses.autoshoot) {
+        actions.push({
+            message: 'Autoshoot',
+            f: () => ship.setAutoshoot()
+        });
+    }
+
+    if (ship.lives < 2) {
+        actions.push({
+            message: 'Shield',
+            f: () => ship.addShield()
+        });
+    }
+
+    if (millis() > ship.lastRingShot + ship.ringShotCoolDown) {
+        actions.push({
+            message: 'Ring shot',
+            f: () => ship.ringShoot()
+        });
+    }
+
+    if (actions.length > 0) {
+        const {message, f} = actions[parseInt(random() * actions.length)];
+        f();
+        PlusOne.call(this, pos, message);
+    }
 }
