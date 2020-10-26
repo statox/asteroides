@@ -6,6 +6,7 @@ let bonuses = [];
 let R;
 let score;
 let best;
+let last;
 let shotSounds;
 let explosionShounds;
 let gameOverSound;
@@ -36,6 +37,7 @@ function resetGame() {
         best = score;
         storeItem(itemName, score);
     }
+    last = score;
     score = 0;
     ship = new Ship();
     nbAsteroides = 0;
@@ -75,6 +77,7 @@ function setup() {
         console.error('Could not get best score from local storage');
         best = 0;
     }
+    last = 0;
     resetGame();
 }
 
@@ -158,7 +161,8 @@ function draw() {
     fill(200);
     textSize(20);
     text(`score: ${score}`, 50, 50);
-    text(`best: ${best}`, 50, 70);
+    text(`last: ${last}`, 50, 70);
+    text(`best: ${best}`, 50, 90);
 }
 
 function getInput() {
