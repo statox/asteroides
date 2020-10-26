@@ -1,7 +1,8 @@
 function Asteroide(pos, r, speed) {
     Mover.call(this);
     this.minR = 30;
-    this.r = r || map(random(), 0, 1, this.minR, 50);
+    this.maxR = 60;
+    this.r = r || map(random(), 0, 1, this.minR, this.maxR);
     if (pos) {
         this.pos = pos;
     } else {
@@ -14,16 +15,16 @@ function Asteroide(pos, r, speed) {
     this.speed.setMag(this.maxSpeed);
     this.rotateAngle = map(this.randomValue, 0, 1, -radians(1), radians(1));
 
-    this.nbVertexes = 20;
-    this.vertexes = [new p5.Vector(0, this.r)];
+    this.nbVertexes = 40;
+    this.vertexes = [];
 
-    for (let i = 1; i < this.nbVertexes; i++) {
-        const v = this.vertexes[i - 1].copy();
-        const offset = random() * 10000;
-        const n = Noise({x: (offset + i) * 0.1});
-        const r = map(n, 0, 1, -10, 10);
-        v.rotate((2 * PI) / this.nbVertexes);
-        v.setMag(this.r + r);
+    const offset = random() * 10000;
+    for (let i = 0; i < this.nbVertexes; i++) {
+        const v = new p5.Vector(0, this.r);
+        v.rotate((i * (2 * PI)) / this.nbVertexes);
+        const n = Noise({x: offset + v.x * 0.01, y: offset * 11 + v.y * 0.01});
+        const r = map(n, 0, 1, this.r * 0.1, this.r * 2);
+        v.setMag(r);
         this.vertexes.push(v);
     }
 
@@ -52,8 +53,8 @@ function Asteroide(pos, r, speed) {
             return [];
         }
         return [
-            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(-PI / 8)),
-            new Asteroide(this.pos.copy(), this.r * 0.8, this.speed.copy().rotate(PI / 8))
+            new Asteroide(this.pos.copy(), this.r * 0.7, this.speed.copy().rotate(-PI / 8)),
+            new Asteroide(this.pos.copy(), this.r * 0.7, this.speed.copy().rotate(PI / 8))
         ];
     };
 }
