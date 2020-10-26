@@ -11,6 +11,7 @@ function Ship() {
     this.lastRingShot = millis();
     this.rotationSpeed = radians(6);
     this.thrusting = false;
+    this.thrustingTimeout;
     this.lives = 1;
     this.bonuses = {
         tripleGun: false,
@@ -47,7 +48,7 @@ function Ship() {
             push();
             fill(200, 100, 100);
             translate(this.pos.x, this.pos.y);
-            scale(0.5);
+            scale(this.bonuses.forcedEngine ? 0.9 : 0.5);
             rotate(this.dir.heading() + PI / 2 + PI);
             translate(0, -30);
             beginShape();
@@ -113,7 +114,11 @@ function Ship() {
         this.acc = this.dir.copy();
         this.acc.setMag(0.5);
         this.thrusting = true;
-        setTimeout(() => {
+
+        if (this.thrustingTimeout) {
+            clearTimeout(this.thrustingTimeout);
+        }
+        this.thrustingTimeout = setTimeout(() => {
             this.thrusting = false;
         }, 500);
     };
