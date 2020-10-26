@@ -17,10 +17,13 @@ let crazyEngineSound;
 let thrustSound;
 let highScoreSound;
 let nbAsteroides;
-const itemName = 'statox-asteroides-best';
+
+const itemNames = {
+    best: 'statox-asteroides-best'
+};
 
 function customResizeCanvas() {
-    const dim = Math.min(windowHeight, windowWidth);
+    const dim = Math.min(windowHeight, windowWidth) * 0.8;
     R = (dim * 0.95) / 2;
     resizeCanvas(dim, dim);
 }
@@ -41,7 +44,7 @@ function generateAsteroides() {
 function resetGame() {
     if (score > best) {
         best = score;
-        storeItem(itemName, score);
+        storeItem(itemNames.best, score);
     }
     last = score;
     score = 0;
@@ -74,6 +77,8 @@ function preload() {
     thrustSound = loadSound(`${baseUrl}/Fiuu.m4a`);
 
     highScoreSound = loadSound(`${baseUrl}/Highscore.m4a`);
+
+    noLoop();
 }
 
 function setup() {
@@ -87,8 +92,10 @@ function setup() {
     customResizeCanvas();
     myCanvas.parent('canvasDiv');
 
+    initInterface();
+
     try {
-        best = Number(getItem(itemName));
+        best = Number(getItem(itemNames.best));
     } catch (e) {
         console.error('Could not get best score from local storage');
         best = 0;
@@ -209,6 +216,8 @@ function keyPressed() {
 
     // space
     if (keyCode === 32) {
+        // This is needed to avoid toggling the sound with space after clicking the button
+        document.activeElement.blur();
         ship.shoot();
     }
 

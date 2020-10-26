@@ -8,19 +8,24 @@
     <title>Asteroides</title>
     <meta name="description" content="Asteroides">
 
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/cc32401bee.js" crossorigin="anonymous"></script>
+
     <!-- Custom css -->
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/modal.css">
 
     <!-- Dependencies -->
     <script defer src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/p5/lib/p5.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/p5/lib/addons/p5.sound.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/gh/CodingTrain/QuadTree/quadtree.js"></script>
     <script defer src="https://unpkg.com/p5.collide2d"></script>
 
     <!-- App -->
     <script defer src="app/sketch.js"></script>
     <script defer src="app/Interface.js"></script>
+    <script defer src="app/Sound.js"></script>
     <script defer src="app/Noise.js"></script>
     <script defer src="app/Mover.js"></script>
     <script defer src="app/Shot.js"></script>
@@ -32,6 +37,52 @@
 
 <body>
     <div class="content-container" id="appDiv">
+        <div id="settings">
+            <!-- Trigger/Open The Modal -->
+            <button id="soundToggleBtn" v-on:click="soundOn = !soundOn">
+                <i v-if="soundOn" class="fas fa-volume-mute"></i>
+                <i v-else class="fas fa-volume-up"></i>
+            </button>
+
+            <!-- Trigger/Open The Modal -->
+            <button id="infoModalBtn">
+                <i class="far fa-question-circle"></i>
+            </button>
+        </div>
+
+        <!-- The Modal -->
+        <div id="infoModal" class="modal">
+            <!-- Modal content -->
+            <div class="info-modal-content">
+                <span class="close">&times;</span>
+                <h1>Asteroids... with real pew pews</h1>
+                <div>
+                    <p>This is my implementation of the well known game <a target="_blank" rel="noopener noreferrer"
+                            href="https://en.wikipedia.org/wiki/Asteroids_(video_game)">Asteroids</a>. So you know the
+                        drill:</p>
+                    <ul>
+                        <li><kbd>Right Arrow</kbd> and <kbd>Left Arrow</kbd> to turn the spaceship</li>
+                        <li><kbd>Up Arrow</kbd> to turn the engine on</li>
+                        <li>and <kbd>Spacebar</kbd> to shoot at the asteroids.</li>
+                    </ul>
+                    <p>Once in a while you get a bonus or a malus, like autoshoot or slow turning.</p>
+                    <p>And you have a button to turn the sound off and on, but honestly the sound effects are the main
+                        interest of this implementation</p>
+                    <br />
+                    <p><b>Close this window to start playing.</b></p>
+                    <br />
+                    <p>
+                        <b>Warning for Firefox users</b>: This greatly saddens me but the performances of this page
+                        on Firefox are terrible. This is because the library I'm using (<a>p5.js</a>) doesn't play
+                        well with a default setting
+                        <code>privacy.resistFingerprinting.randomDataOnCanvasExtract</code> of firefox.
+                    </p>
+                    <p>If you know what you are doing you can change that in <code>about:config</code>, otherwise
+                        it's fine keep using Firefox this is a great browser and the net needs it</p>
+                </div>
+            </div>
+        </div>
+
         <div oncontextmenu="return false;" id="canvasDiv"></div>
     </div>
 </body>
