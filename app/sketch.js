@@ -58,25 +58,28 @@ function preload() {
     const baseUrl = 'https://raw.githubusercontent.com/statox/asteroides/master/assets';
     // const baseUrl = '../assets';
     shotSounds = [];
-    shotSounds.push(loadSound(`${baseUrl}/shot_1.mp3`));
-    shotSounds.push(loadSound(`${baseUrl}/shot_2.mp3`));
-    shotSounds.push(loadSound(`${baseUrl}/Shot_3.m4a`));
-    shotSounds.push(loadSound(`${baseUrl}/Shot_21.m4a`));
-    shotSounds.push(loadSound(`${baseUrl}/Shot_22.m4a`));
-    shotSounds.push(loadSound(`${baseUrl}/Shot_23.m4a`));
+    try {
+        shotSounds.push(loadSound(`${baseUrl}/shot_1.mp3`));
+        shotSounds.push(loadSound(`${baseUrl}/shot_2.mp3`));
+        shotSounds.push(loadSound(`${baseUrl}/Shot_3.m4a`));
+        shotSounds.push(loadSound(`${baseUrl}/Shot_21.m4a`));
+        shotSounds.push(loadSound(`${baseUrl}/Shot_22.m4a`));
+        shotSounds.push(loadSound(`${baseUrl}/Shot_23.m4a`));
 
-    explosionShounds = [];
-    explosionShounds.push(loadSound(`${baseUrl}/Boum_1.m4a`));
-    explosionShounds.push(loadSound(`${baseUrl}/Boum_2.m4a`));
-    explosionShounds.push(loadSound(`${baseUrl}/Boum_3.m4a`));
+        explosionShounds = [];
+        explosionShounds.push(loadSound(`${baseUrl}/Boum_1.m4a`));
+        explosionShounds.push(loadSound(`${baseUrl}/Boum_2.m4a`));
+        explosionShounds.push(loadSound(`${baseUrl}/Boum_3.m4a`));
 
-    gameOverSound = loadSound(`${baseUrl}/Game_over.m4a`);
+        gameOverSound = loadSound(`${baseUrl}/Game_over.m4a`);
 
-    crazyEngineSound = loadSound(`${baseUrl}/Wooah.m4a`);
+        crazyEngineSound = loadSound(`${baseUrl}/Wooah.m4a`);
 
-    thrustSound = loadSound(`${baseUrl}/Fiuu.m4a`);
-
-    highScoreSound = loadSound(`${baseUrl}/Highscore.m4a`);
+        highScoreSound = loadSound(`${baseUrl}/Highscore.m4a`);
+    } catch (e) {
+        console.error("Couldn't load all the sounds");
+        console.error(e);
+    }
 
     noLoop();
 }

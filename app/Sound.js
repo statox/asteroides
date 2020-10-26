@@ -1,5 +1,5 @@
 function playSound(sound) {
-    if (!appSettings.soundOn) {
+    if (!appSettings.soundOn || !sound) {
         return;
     }
 
