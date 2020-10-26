@@ -104,8 +104,9 @@ function Ship() {
         const shotSpeed = this.dir.copy();
         shotSpeed.setMag(11);
         this.shots.push(new Shot(this.pos, shotSpeed));
-        for (let i = 0; i < 360; i++) {
-            shotSpeed.rotate((2 * PI) / 360);
+        const nbRays = 50;
+        for (let i = 0; i < nbRays; i++) {
+            shotSpeed.rotate((2 * PI) / nbRays);
             this.shots.push(new Shot(this.pos, shotSpeed));
         }
     };

@@ -77,6 +77,7 @@ function setup() {
         console.error('Could not get best score from local storage');
         best = 0;
     }
+    score = 0;
     last = 0;
     resetGame();
 }
@@ -175,7 +176,7 @@ function getInput() {
         ship.turnRight();
     }
     // up
-    if (keyIsDown(38)) {
+    if (keyIsDown(38) || keyIsDown(75)) {
         ship.thrust();
     }
 }
