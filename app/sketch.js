@@ -181,4 +181,35 @@ function keyPressed() {
     if (keyCode === 32) {
         ship.shoot();
     }
+
+    /*
+     * Cheats
+     */
+    switch (keyCode) {
+        // q
+        case 81:
+            ship.setTripleGun();
+            break;
+        // w
+        case 87:
+            ship.setAutoshoot();
+            break;
+        // e
+        case 69:
+            ship.addShield();
+            break;
+        // r
+        case 82:
+            ship.ringShoot();
+            break;
+        // t
+        case 84:
+            ship.setSlowTurn();
+            break;
+        // y
+        case 89:
+            ship.setForcedEngine();
+            break;
+    }
+    console.log(keyCode);
 }

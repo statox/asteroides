@@ -160,7 +160,7 @@ function Ship() {
 
         setTimeout(() => {
             this.bonuses.forcedEngine = false;
-        }, 2500);
+        }, 5000);
     };
 
     this.hit = () => {
