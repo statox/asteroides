@@ -3,6 +3,14 @@ function Bonus(pos) {
         {
             message: '+1',
             f: () => (score += 1)
+        },
+        {
+            message: 'Slow turn',
+            f: () => ship.setSlowTurn()
+        },
+        {
+            message: 'Crazy engine',
+            f: () => ship.setForcedEngine()
         }
     ];
 

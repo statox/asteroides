@@ -6,10 +6,11 @@ function Ship() {
     this.vertexes = [new p5.Vector(-10, 10), new p5.Vector(0, -20), new p5.Vector(10, 10)];
     this.shots = [];
     this.coolDown = 300;
-    this.ringShotCoolDown = 5000;
+    this.ringShotCoolDown = 10 * 1000;
     this.lastShot = millis();
     this.lastRingShot = millis();
     this.rotationSpeed = radians(6);
+    this.thrusting = false;
     this.lives = 1;
     this.bonuses = {
         tripleGun: false,
@@ -17,12 +18,17 @@ function Ship() {
     };
 
     this.draw = () => {
+        if (this.bonuses.slowTurn) {
+            stroke(200, 0, 0);
+        } else {
+            stroke(200);
+        }
+
         if (this.lives > 1) {
             push();
             translate(this.pos.x, this.pos.y);
             scale(1.5);
             rotate(this.dir.heading() + PI / 2);
-            stroke(200);
             beginShape();
             this.vertexes.forEach((v) => vertex(v.x, v.y));
             endShape(CLOSE);
@@ -32,15 +38,30 @@ function Ship() {
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.dir.heading() + PI / 2);
-        stroke(200);
         beginShape();
         this.vertexes.forEach((v) => vertex(v.x, v.y));
         endShape(CLOSE);
         pop();
 
+        if (this.thrusting) {
+            push();
+            fill(200, 100, 100);
+            translate(this.pos.x, this.pos.y);
+            scale(0.5);
+            rotate(this.dir.heading() + PI / 2 + PI);
+            translate(0, -30);
+            beginShape();
+            this.vertexes.forEach((v) => vertex(v.x, v.y));
+            endShape(CLOSE);
+            pop();
+        }
+
         // Should be in an inherited move function
         if (this.bonuses.autoshoot) {
             this.shoot();
+        }
+        if (this.bonuses.forcedEngine) {
+            this.thrust();
         }
     };
 
@@ -91,6 +112,10 @@ function Ship() {
     this.thrust = () => {
         this.acc = this.dir.copy();
         this.acc.setMag(0.5);
+        this.thrusting = true;
+        setTimeout(() => {
+            this.thrusting = false;
+        }, 500);
     };
 
     this.turnLeft = () => {
@@ -119,6 +144,23 @@ function Ship() {
 
     this.addShield = () => {
         this.lives++;
+    };
+
+    this.setSlowTurn = () => {
+        this.bonuses.slowTurn = true;
+        this.rotationSpeed = radians(1);
+        setTimeout(() => {
+            this.bonuses.slowTurn = false;
+            this.rotationSpeed = radians(6);
+        }, 5000);
+    };
+
+    this.setForcedEngine = () => {
+        this.bonuses.forcedEngine = true;
+
+        setTimeout(() => {
+            this.bonuses.forcedEngine = false;
+        }, 2500);
     };
 
     this.hit = () => {
