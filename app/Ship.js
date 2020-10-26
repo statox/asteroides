@@ -80,7 +80,7 @@ function Ship() {
     this.shoot = () => {
         if (millis() > this.lastShot + this.coolDown) {
             const index = parseInt(random() * shotSounds.length);
-            shotSounds[index].play();
+            playSound(shotSounds[index]);
 
             this.lastShot = millis();
 
@@ -98,7 +98,7 @@ function Ship() {
 
     this.ringShoot = () => {
         const index = parseInt(random() * shotSounds.length);
-        shotSounds[index].play();
+        playSound(shotSounds[index]);
         this.lastRingShot = millis();
 
         const shotSpeed = this.dir.copy();
@@ -163,6 +163,7 @@ function Ship() {
 
     this.setForcedEngine = () => {
         this.bonuses.forcedEngine = true;
+        playSound(crazyEngineSound);
 
         setTimeout(() => {
             this.bonuses.forcedEngine = false;
@@ -171,6 +172,5 @@ function Ship() {
 
     this.hit = () => {
         this.lives--;
-        console.log(this.lives);
     };
 }

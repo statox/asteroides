@@ -1,4 +1,7 @@
-let appSettings = {};
+let appSettings = {
+    soundOn: true
+};
+
 let ship;
 let asteroides;
 let plusOnes = [];
@@ -10,6 +13,9 @@ let last;
 let shotSounds;
 let explosionShounds;
 let gameOverSound;
+let crazyEngineSound;
+let thrustSound;
+let highScoreSound;
 let nbAsteroides;
 const itemName = 'statox-asteroides-best';
 
@@ -46,18 +52,28 @@ function resetGame() {
 
 function preload() {
     soundFormats('mp3', 'm4a');
+    const baseUrl = 'https://raw.githubusercontent.com/statox/asteroides/master/assets';
+    // const baseUrl = '../assets';
     shotSounds = [];
-    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/shot_1.mp3'));
-    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/shot_2.mp3'));
-    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Shot_3.m4a'));
-    shotSounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Shot_4.m4a'));
+    shotSounds.push(loadSound(`${baseUrl}/shot_1.mp3`));
+    shotSounds.push(loadSound(`${baseUrl}/shot_2.mp3`));
+    shotSounds.push(loadSound(`${baseUrl}/Shot_3.m4a`));
+    shotSounds.push(loadSound(`${baseUrl}/Shot_21.m4a`));
+    shotSounds.push(loadSound(`${baseUrl}/Shot_22.m4a`));
+    shotSounds.push(loadSound(`${baseUrl}/Shot_23.m4a`));
 
     explosionShounds = [];
-    explosionShounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Boum_1.m4a'));
-    explosionShounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Boum_2.m4a'));
-    explosionShounds.push(loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Boum_3.m4a'));
+    explosionShounds.push(loadSound(`${baseUrl}/Boum_1.m4a`));
+    explosionShounds.push(loadSound(`${baseUrl}/Boum_2.m4a`));
+    explosionShounds.push(loadSound(`${baseUrl}/Boum_3.m4a`));
 
-    gameOverSound = loadSound('https://raw.githubusercontent.com/statox/asteroides/master/assets/Game_over.m4a');
+    gameOverSound = loadSound(`${baseUrl}/Game_over.m4a`);
+
+    crazyEngineSound = loadSound(`${baseUrl}/Wooah.m4a`);
+
+    thrustSound = loadSound(`${baseUrl}/Fiuu.m4a`);
+
+    highScoreSound = loadSound(`${baseUrl}/Highscore.m4a`);
 }
 
 function setup() {
@@ -124,7 +140,11 @@ function draw() {
             ship.hit();
             a.hit = true;
             if (ship.lives === 0) {
-                gameOverSound.play();
+                if (score > best) {
+                    playSound(highScoreSound);
+                } else {
+                    playSound(gameOverSound);
+                }
                 resetGame();
             }
         }
@@ -182,6 +202,11 @@ function getInput() {
 }
 
 function keyPressed() {
+    // Chromes forces to start audio context on user input
+    if (getAudioContext().state !== 'running') {
+        userStartAudio();
+    }
+
     // space
     if (keyCode === 32) {
         ship.shoot();
@@ -216,5 +241,4 @@ function keyPressed() {
             ship.setForcedEngine();
             break;
     }
-    console.log(keyCode);
 }
