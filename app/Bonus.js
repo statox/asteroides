@@ -16,14 +16,14 @@ function Bonus(pos) {
 
     if (!ship.bonuses.tripleGun) {
         actions.push({
-            message: 'Triple Gun',
+            message: 'Triple Pew',
             f: () => ship.setTripleGun()
         });
     }
 
     if (!ship.bonuses.autoshoot) {
         actions.push({
-            message: 'Autoshoot',
+            message: 'Autopew',
             f: () => ship.setAutoshoot()
         });
     }
@@ -37,7 +37,7 @@ function Bonus(pos) {
 
     if (millis() > ship.lastRingShot + ship.ringShotCoolDown) {
         actions.push({
-            message: 'Ring shot',
+            message: 'Ring pew',
             f: () => ship.ringShoot()
         });
     }
