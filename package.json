@@ -1,7 +1,7 @@
 {
-  "name": "project",
+  "name": "Asteroides",
   "version": "0.0.1",
-  "description": "Asteroides",
+  "description": "The old arcade game Asteroides when home made sound effects.",
   "main": "",
   "scripts": {
     "dev": "npx light-server -s . -w \"**/*\""
